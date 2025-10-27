@@ -1,5 +1,7 @@
 # 🎨 Task Manager - UI (Frontend)
 
+**[➡️ Canlı Uygulamayı Gör (Netlify)](task-managerui.netlify.app)**
+
 Bu proje, Nest.JS API'sini tüketen, Rol Tabanlı Yetkilendirme (RBAC) özelliklerini yansıtan ve ileri düzey UX/UI prensiplerini kullanan bir Angular arayüzüdür.
 
 ## 🛠️ Kullanılan Teknolojiler

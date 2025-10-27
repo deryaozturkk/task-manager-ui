@@ -39,7 +39,7 @@ Bu proje, Nest.JS API'sini tüketen, Rol Tabanlı Yetkilendirme (RBAC) özellikl
 
 1.  Uygulama açıldığında otomatik olarak `/login` sayfasına yönlendirileceksiniz.
 2.  **'admin' Kullanıcısıyla Giriş Yapın:**
-    * **Username:** `admin` (veya kaydettiğiniz admin)
+    * **Username:** `admin1` (veya kaydettiğiniz admin)
     * **Password:** `password123` (veya kaydettiğiniz şifre)
     * **Gözlem:** Görevleri **atamaya, eklemeye ve silmeye** izin verilecektir.
 3.  **Çıkış Yapın ve 'user' Kullanıcısıyla Giriş Yapın:**

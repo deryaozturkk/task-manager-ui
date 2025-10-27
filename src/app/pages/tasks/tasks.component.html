@@ -1,0 +1,209 @@
+<mat-toolbar color="primary" class="main-toolbar">
+  <mat-toolbar-row>
+    <span>💼 Task Manager</span>
+    
+    <a mat-button routerLink="/tasks" routerLinkActive="active" 
+       matTooltip="Görev Yöneticisine Git" class="nav-button">
+      <mat-icon>assignment</mat-icon> Görevler
+    </a>
+    <a mat-button routerLink="/profile" routerLinkActive="active" 
+       matTooltip="Profil ve Şifre Değiştirme" class="nav-button">
+      <mat-icon>account_circle</mat-icon> Profilim
+    </a>
+    
+    <span class="toolbar-spacer"></span> <span class="user-info-text">
+      {{ authService.getUserRole() === 'admin' ? 'Admin' : 'User' }}: {{ authService.decodeToken()?.username }}
+    </span>
+    <button mat-icon-button (click)="onLogout()" matTooltip="Çıkış Yap">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<main class="main-content">
+    
+    <ng-container *ngIf="userRole === 'admin'">
+      <mat-card class="task-card">
+        <mat-card-header>
+          <mat-card-title>Yeni Görev Ekle (Admin)</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="addTaskForm" (ngSubmit)="onAddTask()">
+            <mat-form-field appearance="outline">
+              <mat-label>Görev Başlığı</mat-label>
+              <input matInput formControlName="title" placeholder="örn: İK Oryantasyonu" />
+              <mat-error *ngIf="addTaskForm.get('title')?.hasError('required')">Başlık zorunludur.</mat-error>
+              <mat-error *ngIf="addTaskForm.get('title')?.hasError('minlength')">Başlık en az 3 karakter olmalıdır.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Açıklama (Opsiyonel)</mat-label>
+              <input matInput formControlName="description" placeholder="örn: B Blok, 14:00" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Görev Atanacak Kullanıcı</mat-label>
+              <mat-select formControlName="userId">
+                <mat-option *ngFor="let user of usersForAssignment" [value]="user.id">
+                  {{ user.username }} ({{ user.role }})
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addTaskForm.get('userId')?.hasError('required')">
+                Kullanıcı seçimi zorunludur.
+              </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="addTaskForm.invalid || isAddingTask">
+              <mat-spinner *ngIf="isAddingTask" [diameter]="24"></mat-spinner>
+              <span *ngIf="!isAddingTask">Ekle</span>
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="task-card">
+        <mat-card-header>
+          <mat-card-title>Görev Listesi (Tüm Kullanıcılar)</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="task-list-content">
+          <mat-button-toggle-group [formControl]="filterControl" class="filter-toggle">
+            <mat-button-toggle value="ALL">Tümü</mat-button-toggle>
+            <mat-button-toggle value="PENDING">Bekleyenler</mat-button-toggle>
+            <mat-button-toggle value="COMPLETED">Tamamlananlar</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <div *ngIf="isLoadingList; else adminListContent" class="list-spinner-container">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <ng-template #adminListContent>
+            <ng-container *ngIf="filteredTasks.length === 0; else taskList">
+                 <div class="empty-state">
+                     <mat-icon class="empty-icon">assignment_turned_in</mat-icon>
+                     <h3>Henüz görev atanmadı.</h3>
+                     <p>Yeni bir görev atayarak başlayabilirsiniz.</p>
+                 </div>
+             </ng-container>
+
+             <ng-template #taskList>
+                <mat-list *ngIf="filteredTasks.length > 0" class="task-items-list">
+                  <mat-list-item *ngFor="let task of filteredTasks" three-line> 
+
+                    <button mat-icon-button (click)="onToggleTaskStatus(task)" [disabled]="tasksBeingModified.has(task.id)"
+                      [color]="task.status === TaskStatus.COMPLETED ? 'primary' : 'basic'"
+                      [matTooltip]="task.status === TaskStatus.PENDING ? 'Tamamla' : 'Geri Al'">
+                      <mat-icon>{{ task.status === TaskStatus.COMPLETED ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+                    </button>
+
+                    <span matListItemTitle [class.task-completed]="task.status === TaskStatus.COMPLETED">
+                      {{ task.title }}
+                    </span>
+                    <span matListItemLine [class.task-completed]="task.status === TaskStatus.COMPLETED">
+                      {{ task.description }}
+                    </span>
+                    <span matListItemLine class="assigned-user" [class.task-completed]="task.status === TaskStatus.COMPLETED">
+                      <mat-icon>person</mat-icon> {{ task.user?.username ?? 'Bilinmeyen Kullanıcı' }}
+                    </span>
+
+                    <ng-container *ngIf="!tasksBeingModified.has(task.id); else itemSpinner">
+                      <button mat-icon-button color="warn" (click)="onDeleteTask(task.id)" matTooltip="Görevi Sil">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </ng-container>
+                    <ng-template #itemSpinner>
+                      <mat-spinner [diameter]="24"></mat-spinner>
+                    </ng-template>
+
+                  </mat-list-item>
+                </mat-list>
+            </ng-template>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+
+    <ng-container *ngIf="userRole === 'user'">
+      <mat-card class="task-card">
+        <mat-card-header>
+          <mat-card-title>Kendine Yeni Görev Ekle (User)</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+           <form [formGroup]="addTaskForm" (ngSubmit)="onAddTask()">
+            <mat-form-field appearance="outline">
+              <mat-label>Görev Başlığı</mat-label>
+              <input matInput formControlName="title" />
+              <mat-error *ngIf="addTaskForm.get('title')?.hasError('required')">Başlık zorunludur.</mat-error>
+              <mat-error *ngIf="addTaskForm.get('title')?.hasError('minlength')">Başlık en az 3 karakter olmalıdır.</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Açıklama (Opsiyonel)</mat-label>
+              <input matInput formControlName="description" />
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="addTaskForm.invalid || isAddingTask">
+              <mat-spinner *ngIf="isAddingTask" [diameter]="24"></mat-spinner>
+              <span *ngIf="!isAddingTask">Ekle</span>
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="task-card">
+        <mat-card-header>
+          <mat-card-title>Görevlerim</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="task-list-content">
+          <mat-button-toggle-group [formControl]="filterControl" class="filter-toggle">
+            <mat-button-toggle value="ALL">Tümü</mat-button-toggle>
+            <mat-button-toggle value="PENDING">Bekleyenler</mat-button-toggle>
+            <mat-button-toggle value="COMPLETED">Tamamlananlar</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <div *ngIf="isLoadingList; else userListContent" class="list-spinner-container">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <ng-template #userListContent>
+            <ng-container *ngIf="filteredTasks.length === 0; else userTaskList">
+                 <div class="empty-state">
+                     <mat-icon class="empty-icon">assignment_turned_in</mat-icon>
+                     <h3>Harika bir başlangıç!</h3>
+                     <p>Henüz size atanmış veya eklediğiniz görev bulunmuyor.</p>
+                 </div>
+             </ng-container>
+            
+            <ng-template #userTaskList>
+                <mat-list *ngIf="filteredTasks.length > 0" class="task-items-list">
+                  <mat-list-item *ngFor="let task of filteredTasks" two-line>
+
+                    <button
+                      mat-icon-button
+                      (click)="onToggleTaskStatus(task)"
+                      [disabled]="tasksBeingModified.has(task.id)" 
+                      [color]="task.status === TaskStatus.COMPLETED ? 'primary' : 'basic'"
+                      [matTooltip]="task.status === TaskStatus.PENDING ? 'Tamamla' : 'Geri Al'"
+                    >
+                      <mat-icon>
+                        {{ task.status === TaskStatus.COMPLETED ? 'check_circle' : 'radio_button_unchecked' }}
+                      </mat-icon>
+                    </button>
+          
+                    <span matListItemTitle [class.task-completed]="task.status === TaskStatus.COMPLETED">
+                      {{ task.title }}
+                    </span>
+                    <span matListItemLine [class.task-completed]="task.status === TaskStatus.COMPLETED">
+                      {{ task.description }}
+                    </span>
+          
+                    <ng-container *ngIf="tasksBeingModified.has(task.id)">
+                        <mat-spinner [diameter]="24"></mat-spinner>
+                    </ng-container>
+
+                  </mat-list-item>
+                </mat-list>
+            </ng-template>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+</main>

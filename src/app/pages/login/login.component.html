@@ -1,0 +1,42 @@
+<div class="login-container">
+    <mat-card class="login-card">
+      <mat-card-header>
+        <mat-card-title>Giriş Yap</mat-card-title>
+        <mat-card-subtitle>Task Manager</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Kullanıcı Adı</mat-label>
+            <input matInput formControlName="username" placeholder="örn: admin" />
+            <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+              Kullanıcı adı zorunludur.
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Şifre</mat-label>
+            <input matInput formControlName="password" type="password" />
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+              Şifre zorunludur.
+            </mat-error>
+          </mat-form-field>
+  
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="loginForm.invalid || isLoading"
+          >
+            <mat-spinner *ngIf="isLoading" [diameter]="24"></mat-spinner>
+            <span *ngIf="!isLoading">Giriş Yap</span>
+          </button>
+  
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-button routerLink="/register">Hesabınız yok mu? Kayıt Olun</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>

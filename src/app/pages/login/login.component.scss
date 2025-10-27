@@ -1,0 +1,29 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; // Tüm ekranı kapla
+    background-color: #f5f5f5; // Hafif gri arkaplan
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  button[mat-raised-button] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+  }
+  
+  mat-card-actions {
+    padding: 0 16px 16px 16px;
+  }

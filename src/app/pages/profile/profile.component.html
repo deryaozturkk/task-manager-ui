@@ -1,0 +1,59 @@
+<mat-toolbar color="primary" class="main-toolbar">
+    <mat-toolbar-row>
+      <span>💼 Task Manager</span>
+      
+      <a mat-button routerLink="/tasks" routerLinkActive="active" 
+         matTooltip="Görev Yöneticisine Git" class="nav-button">
+        <mat-icon>assignment</mat-icon> Görevler
+      </a>
+      <a mat-button routerLink="/profile" routerLinkActive="active" 
+         matTooltip="Profil ve Şifre Değiştirme" class="nav-button">
+        <mat-icon>account_circle</mat-icon> Profilim
+      </a>
+      
+      <span class="toolbar-spacer"></span>
+      <span class="user-info-text">
+        {{ authService.getUserRole() === 'admin' ? 'Admin' : 'User' }}: {{ authService.decodeToken()?.username }}
+      </span>
+      <button mat-icon-button (click)="onLogout()" matTooltip="Çıkış Yap">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  
+  <main class="profile-main">
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <mat-card-title>Profil Bilgileri</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Kullanıcı Adı:</strong> {{ username }}</p>
+        <p><strong>Rol:</strong> {{ authService.getUserRole() === 'admin' ? 'Yönetici' : 'Kullanıcı' }}</p>
+        <mat-divider class="mb-4"></mat-divider>
+  
+        <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()" class="password-form">
+          <h3>Şifre Değiştirme</h3>
+  
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Mevcut Şifre</mat-label>
+            <input matInput type="password" formControlName="currentPassword" />
+            <mat-error *ngIf="changePasswordForm.get('currentPassword')?.hasError('required')">Mevcut şifre zorunludur.</mat-error>
+            <mat-error *ngIf="changePasswordForm.get('currentPassword')?.hasError('minlength')">Mevcut şifre en az 6 karakter olmalıdır.</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Yeni Şifre</mat-label>
+            <input matInput type="password" formControlName="newPassword" />
+            <mat-error *ngIf="changePasswordForm.get('newPassword')?.hasError('required')">Yeni şifre zorunludur.</mat-error>
+            <mat-error *ngIf="changePasswordForm.get('newPassword')?.hasError('minlength')">Yeni şifre en az 6 karakter olmalıdır.</mat-error>
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" type="submit" [disabled]="changePasswordForm.invalid || isChangingPassword">
+            <mat-spinner *ngIf="isChangingPassword" [diameter]="24"></mat-spinner>
+            <span *ngIf="!isChangingPassword">Şifreyi Güncelle</span>
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </main>

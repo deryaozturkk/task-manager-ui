@@ -1,0 +1,144 @@
+.main-content {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Kartların içindeki formun daha iyi görünmesi için */
+  .task-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Görev tamamlandığında üstünü çizmek için */
+  .task-completed {
+    text-decoration: line-through;
+    color: #aaa;
+  }
+  
+  /* "Ekle" butonundaki Spinner için */
+  button[mat-raised-button] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+  }
+  
+  /* Ana Liste Yükleme Spinner'ı */
+  .list-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  
+  /* Filtre Butonları */
+  .filter-toggle {
+    margin-bottom: 20px;
+    display: flex;
+  
+    mat-button-toggle {
+      flex: 1;
+    }
+  }
+  
+  /* Görev listesi boşken gösterilecek mesaj */
+  .empty-list-message {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .task-list-content {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  
+  .task-items-list {
+    .mat-mdc-list-item-line {
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+  }
+
+.assigned-user {
+    display: flex;       
+    align-items: center; 
+    gap: 6px;           
+    font-size: 0.8em;   
+    color: #666;         
+  
+    mat-icon {
+      font-size: 1em;    
+      height: auto;      
+      width: auto;       
+    }
+  }
+  
+  .assigned-user.task-completed {
+    color: #bbb;
+  }
+  
+  mat-list-item[two-line] mat-icon[matListItemIcon] {
+    align-self: flex-start; // İkonu yukarı hizala
+    margin-top: 8px;       
+  }
+
+.main-toolbar {
+  height: 64px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto; /* Kullanıcı bilgisini sağa iter */
+}
+
+.nav-bar {
+  margin-left: 20px;
+}
+
+.nav-item {
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.user-info-text {
+  font-size: 1.1em;
+  font-weight: 400;
+  margin-right: 15px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  color: #6a6a6a;
+
+  .empty-icon {
+    font-size: 6em;
+    height: 1.5em;
+    width: 1.5em;
+    color: #bdbdbd; /* Açık gri */
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    margin: 0;
+    font-weight: 500;
+    color: #444;
+  }
+  p {
+    margin-top: 5px;
+    font-size: 0.9em;
+  }
+}

@@ -19,7 +19,7 @@ export interface Task {
 }
 
 @Injectable({
-  providedIn: 'root' // Angular 17+ sayesinde bu servis otomatik olarak projemizde kullanılabilir
+  providedIn: 'root' 
 })
 export class TaskService {
   // NestJS API'mizin adresini buraya yazıyoruz

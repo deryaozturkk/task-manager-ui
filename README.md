@@ -1,27 +1,47 @@
-# NewcomerTasksUi
+# 🎨 Task Manager - UI (Frontend)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.3.
+Bu proje, Nest.JS API'sini tüketen, Rol Tabanlı Yetkilendirme (RBAC) özelliklerini yansıtan ve ileri düzey UX/UI prensiplerini kullanan bir Angular arayüzüdür.
 
-## Development server
+## 🛠️ Kullanılan Teknolojiler
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* **Framework:** Angular 17 (Standalone Components)
+* **UI/UX:** Angular Material (Cards, Buttons, Dialogs, Spinners)
+* **Routing:** Login Guard (Giriş yapılmamışsa erişimi engeller)
+* **State:** Reactive Forms ile form yönetimi ve yerel durum yönetimi.
+* **Interceptors:** JWT Token'ı tüm giden HTTP isteklerine otomatik ekler.
 
-## Code scaffolding
+## 🎯 Özellikler
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* **Rol Bazlı Görünüm:** Admin'ler görev atama dropdown'ını ve yönetim butonlarını görürken, User'lar sadece kendi görevlerini görür.
+* **Responsive Layout:** CSS Grid kullanılarak her ekranda düzgün görünen kart düzeni.
+* **Gelişmiş UX:** Silme işlemi için onay penceresi (`MatDialog`), boş listeler için özel ekranlar (`Empty States`) ve yükleme durumları (`mat-spinner`).
+* **Hesap Yönetimi:** Kullanıcılar şifrelerini güncelleyebilir.
 
-## Build
+## 🚀 Kurulum ve Çalıştırma Adımları
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+**Önkoşullar:** Node.js, npm, ve Backend API'sinin çalışıyor olması.
 
-## Running unit tests
+1.  **Backend'i Başlatma:**
+    * `newcomer-tasks-api` projesine gidin ve `npm run start:dev` komutunu çalıştırın. (Bu, **ilk ve zorunlu** adımdır.)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+2.  **Bağımlılıkları Yükleme:**
+    ```bash
+    npm install
+    ```
 
-## Running end-to-end tests
+3.  **Uygulamayı Başlatma:**
+    ```bash
+    ng serve -o
+    ```
+    *Uygulama, `http://localhost:4200` adresinde açılacaktır.*
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🔒 Test Akışı (Demo)
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1.  Uygulama açıldığında otomatik olarak `/login` sayfasına yönlendirileceksiniz.
+2.  **'admin' Kullanıcısıyla Giriş Yapın:**
+    * **Username:** `admin` (veya kaydettiğiniz admin)
+    * **Password:** `password123` (veya kaydettiğiniz şifre)
+    * **Gözlem:** Görevleri **atamaya, eklemeye ve silmeye** izin verilecektir.
+3.  **Çıkış Yapın ve 'user' Kullanıcısıyla Giriş Yapın:**
+    * **Username:** `derya` (veya kaydettiğiniz user)
+    * **Gözlem:** Görevleri sadece **görebilecek**, ancak ekleme veya silme butonları pasif/gizlenmiş olacaktır.

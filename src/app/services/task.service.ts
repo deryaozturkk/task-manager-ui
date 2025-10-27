@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user.service'; 
+import { environment } from '../../environments/environment.prod';
 
 // Backend'deki Task entity'mizin Angular tarafındaki karşılığı
 // 'TaskStatus' enum'unu da buraya kopyalıyoruz
@@ -23,7 +24,7 @@ export interface Task {
 })
 export class TaskService {
   // NestJS API'mizin adresini buraya yazıyoruz
-  private apiUrl = 'http://localhost:3000/tasks';
+  private apiUrl = `${environment.apiUrl}/tasks`;
 
   constructor(private http: HttpClient) { } // HttpClient'ı enjekte ediyoruz
 

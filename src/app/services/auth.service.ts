@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { jwtDecode } from 'jwt-decode'; 
-// Token'ın içindeki verinin yapısını (payload) tanımlayalım
+import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environment.prod';
+
 interface JwtPayload {
   username: string;
   sub: string; // User ID
@@ -15,17 +16,17 @@ interface JwtPayload {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth';
+  private apiUrl = `${environment.apiUrl}/auth`; 
   private tokenKey = 'access_token';
 
   constructor(private http: HttpClient) { }
 
   register(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, credentials);
+    return this.http.post(`${environment.apiUrl}/auth/register`, credentials);
   }
 
   login(credentials: any): Observable<{ access_token: string }> {
-    return this.http.post<{ access_token: string }>(`${this.apiUrl}/login`, credentials)
+    return this.http.post<{ access_token: string }>(`${environment.apiUrl}/auth/login`, credentials)
       .pipe(
         tap(response => {
           this.setToken(response.access_token);
@@ -38,9 +39,9 @@ export class AuthService {
   }
 
   changePassword(passwords: any): Observable<void> {
-    // Backend'de PATCH metodunu kullandık
-    return this.http.patch<void>(`${this.apiUrl}/password`, passwords);
+    return this.http.patch<void>(`${environment.apiUrl}/auth/password`, passwords);
   }
+  
   private setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
   }

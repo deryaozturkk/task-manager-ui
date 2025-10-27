@@ -1,11 +1,9 @@
 import { CanActivateFn, Router } from '@angular/router';
-import { inject } from '@angular/core'; // 'inject' fonksiyonunu import ediyoruz
-import { AuthService } from './auth.service'; // AuthService'imizi import ediyoruz
+import { inject } from '@angular/core'; 
+import { AuthService } from './auth.service'; 
 
-// Bu, Angular 17+ stilinde modern bir "Functional Guard" (Fonksiyonel Koruyucu)
 export const authGuard: CanActivateFn = (route, state) => {
 
-  // Gerekli servisleri 'inject' (enjekte) ediyoruz
   const authService = inject(AuthService);
   const router = inject(Router);
 

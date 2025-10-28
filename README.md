@@ -4,6 +4,16 @@
 
 Bu proje, Nest.JS API'sini tüketen, Rol Tabanlı Yetkilendirme (RBAC) özelliklerini yansıtan ve ileri düzey UX/UI prensiplerini kullanan bir **Angular 17 (Standalone Components)** arayüzüdür.
 
+## ✨ Uygulama Görselleri
+
+| Giriş Ekranı | Kayıt Ekranı | Görevler (Admin) |
+|---|---|---|
+| ![Giriş Ekranı](images/login-view.png) | ![Kayıt Ekranı](images/register-view.png) | ![Admin Görev Ekranı](images/admin-tasks-page.png) |
+
+| Görevler (User) | Profil (Admin) | Profil (User) |
+|---|---|---|
+| ![User Görev Ekranı](images/user-tasks.png) | ![Admin Profil Ekranı](images/admin-profile-page.png) | ![User Profil Ekranı](images/user-profile.png) |
+
 ## 🛠️ Kullanılan Teknolojiler
 
 * **Framework:** Angular 17 (Standalone Components)

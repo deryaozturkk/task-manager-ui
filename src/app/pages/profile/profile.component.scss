@@ -1,112 +1,213 @@
+/* Ana Kapsayıcı: Kartları yan yana (geniş ekran) veya alt alta (dar ekran) dizer */
 .profile-main {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; 
-    padding: 40px 20px;
-    min-height: calc(100vh - 64px); /* Toolbar yüksekliği çıkarıldı */
-  }
-  
-  .profile-card {
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
-    mat-card-header {
-      background-color: #f5f5f5;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-    
-    h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
-      color: #3f51b5;
-    }
-  }
-  
-  .password-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  
-    .w-full {
-      width: 100%;
-    }
-  }
-  
-  .mb-4 {
-    margin-bottom: 1.5rem !important;
+  display: flex; /* Flexbox kullan */
+  flex-wrap: wrap; /* Sığmazsa alt satıra geç */
+  justify-content: center; /* Ortala */
+  gap: 20px; /* Kartlar arasına boşluk koy */
+  padding: 40px 20px;
+  align-items: flex-start; /* Kartları yukarı hizala */
+}
+
+/* Tüm Kartlar İçin Ortak Stiller (Profil ve Kullanıcı Yönetimi) */
+.profile-card,
+.user-management-card {
+  width: 100%; /* Mobil için varsayılan genişlik */
+  max-width: 500px; /* Maksimum genişlik */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex; /* İçeriği yönetmek için flex */
+  flex-direction: column; /* İçeriği dikey diz */
+}
+
+/* Kart Başlıkları İçin Ortak Stil */
+.profile-card mat-card-header,
+.user-management-card mat-card-header {
+  background-color: #f5f5f5;
+  padding: 15px;
+  margin-bottom: 20px; /* Başlık ile içerik arasına boşluk */
+}
+
+/* Profil Bilgileri Kartı İçin Özel Stiller */
+.profile-card mat-card-content {
+  padding: 0 16px 16px 16px; /* Alt boşluğu ayarla */
+}
+
+.profile-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #3f51b5;
+}
+
+/* Şifre Formu Stilleri */
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px; /* Divider ile arasına boşluk */
+}
+
+/* KULLANICI YÖNETİMİ KARTI STİLLERİ */
+.user-management-card mat-card-content {
+   padding: 0; /* Liste kenarlara yapışsın */
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Boş Liste Ekranı (Fikir 6) */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  color: #6a6a6a;
+
+  .empty-icon {
+    font-size: 6em;
+    height: 1.5em; /* Yükseklik/genişliği düzeltelim */
+    width: 1.5em;
+    color: #bdbdbd; /* Açık gri */
+    margin-bottom: 10px;
   }
 
-.main-toolbar {
-    height: 64px;
-  }
-  
-  .toolbar-spacer {
-    flex: 1 1 auto;
-  }
-  
-  .nav-bar {
-    margin-left: 20px;
-  }
-  
-  .nav-button {
-    min-width: 120px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
+  h3 {
+    margin: 0;
     font-weight: 500;
-    
-    &.active { 
-      color: white !important;
-      background-color: rgba(0, 0, 0, 0.1); 
-    }
+    color: #444;
   }
-  
-  .user-info-text {
-    font-size: 1.1em;
-    font-weight: 400;
-    margin-right: 15px;
+  p {
+    margin-top: 5px;
+    font-size: 0.9em;
   }
-  
-  .profile-main {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; 
-    padding: 40px 20px;
-    min-height: calc(100vh - 64px);
+}
+
+
+/* Kullanıcı Listesi Öğesi Stilleri - GÜNCELLENDİ */
+.user-list-item {
+  height: auto !important;
+  /* Dikey padding'i biraz ayarlayalım, yatayı koruyalım */
+  padding: 12px 16px !important; 
+  border-bottom: 1px solid #eee;
+
+  &:last-child {
+    border-bottom: none;
   }
-  
-  .profile-card {
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
-    mat-card-header {
-      background-color: #f5f5f5;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-    
-    h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
-      color: #3f51b5;
-    }
+
+  /* Liste içeriğini flex ile hizala */
+  // Angular Material v15+ .mdc-list-item__content kullanır
+  // Eğer v15 altı ise .mat-list-item-content olabilir
+  .mdc-list-item__content { 
+      display: flex;
+      align-items: center; /* Dikeyde ortala */
+      justify-content: space-between; /* İki uca yasla */
+      width: 100%;
+      gap: 15px; 
   }
-  
-  .password-form {
+
+  /* Kullanıcı adı ve mevcut rolü gruplayalım */
+  .user-info {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-  
-    .w-full {
-      width: 100%;
+    /* Gerekirse genişliği sınırlayabiliriz: max-width: 60%; */
+  }
+
+  .username {
+    font-weight: 500;
+    white-space: nowrap; /* Kullanıcı adı sığmazsa alta kaymasın */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Sığmazsa ... ile kes */
+  }
+
+  .current-role {
+    font-size: 0.85em;
+    color: #666;
+  }
+
+  /* Sağ taraftaki kontroller */
+  .role-controls {
+    display: flex;
+    align-items: center; /* Dikeyde ortala */
+    gap: 8px; /* Kontroller arası boşluk */
+    flex-shrink: 0; /* Bu alan küçülmesin */
+  }
+
+  /* Rol seçimi için mat-form-field stili */
+  .role-select {
+    width: 130px; /* Select kutusuna sabit bir genişlik verelim */
+    /* Form field'ın altındaki gereksiz boşluğu azaltalım */
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none; /* Alt boşluğu tamamen kaldıralım */
+    }
+     /* Etiketi biraz küçültelim */
+    .mat-mdc-floating-label {
+        font-size: 0.8em;
     }
   }
-  
-  .mb-4 {
-    margin-bottom: 1.5rem !important;
+
+  /* Admin kendi rolünü değiştiremez bilgisi */
+  .self-role-info {
+    font-style: italic;
+    color: #888;
+    font-size: 0.85em; /* Diğer metinlerle aynı boyutta */
+    text-align: right;
+    white-space: normal; /* Sığmazsa alt satıra kayabilir */
+    min-width: 150px; /* Kaydet butonuyla hizalamak için */
   }
+
+  .role-spinner {
+     /* Spinner zaten 24px, ekstra stil gerekmez */
+     margin: 0 8px; /* Sağındaki/solundakiyle boşluk */
+  }
+
+  /* Kaydet butonu stili */
+  button[mat-icon-button] {
+    /* Spinner ile hizalamak için */
+    width: 40px; 
+    height: 40px; 
+  }
+}
+
+/* Genel */
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+.w-full {
+  width: 100%;
+}
+
+/* Navbar ve Toolbar Stilleri (TasksComponent'ten) */
+.main-toolbar {
+  height: 64px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.nav-button {
+  min-width: auto; /* Otomatik genişlik */
+  padding: 0 16px; /* İç boşluk */
+  display: flex;
+  flex-direction: row; 
+  align-items: center; 
+  gap: 6px; /* İkon ve metin arası */
+  margin-right: 8px; /* Butonlar arası boşluk */
+  font-weight: 500;
+  
+  &.active { 
+    color: white !important;
+    background-color: rgba(0, 0, 0, 0.1); 
+  }
+}
+
+.user-info-text {
+  font-size: 0.9em; /* Biraz küçültelim */
+  font-weight: 400;
+  margin-right: 10px; /* Butonla arasına boşluk */
+}
+
+

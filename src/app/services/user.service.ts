@@ -20,4 +20,10 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
+  
+  // Kullanıcı Rolünü Güncelleme
+  updateUserRole(userId: string, role: 'admin' | 'user'): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/${userId}/role`, { role });
+  }
+  
 }

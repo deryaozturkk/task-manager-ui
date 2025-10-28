@@ -1,59 +1,124 @@
+<!-- src/app/pages/profile/profile.component.html -->
+
+<!-- NAVBAR (Aynı kalıyor) -->
 <mat-toolbar color="primary" class="main-toolbar">
-    <mat-toolbar-row>
-      <span>💼 Task Manager</span>
-      
-      <a mat-button routerLink="/tasks" routerLinkActive="active" 
-         matTooltip="Görev Yöneticisine Git" class="nav-button">
-        <mat-icon>assignment</mat-icon> Görevler
-      </a>
-      <a mat-button routerLink="/profile" routerLinkActive="active" 
-         matTooltip="Profil ve Şifre Değiştirme" class="nav-button">
-        <mat-icon>account_circle</mat-icon> Profilim
-      </a>
-      
-      <span class="toolbar-spacer"></span>
-      <span class="user-info-text">
-        {{ authService.getUserRole() === 'admin' ? 'Admin' : 'User' }}: {{ authService.decodeToken()?.username }}
-      </span>
-      <button mat-icon-button (click)="onLogout()" matTooltip="Çıkış Yap">
-        <mat-icon>logout</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  
-  
-  <main class="profile-main">
-    <mat-card class="profile-card">
-      <mat-card-header>
-        <mat-card-title>Profil Bilgileri</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p><strong>Kullanıcı Adı:</strong> {{ username }}</p>
-        <p><strong>Rol:</strong> {{ authService.getUserRole() === 'admin' ? 'Yönetici' : 'Kullanıcı' }}</p>
-        <mat-divider class="mb-4"></mat-divider>
-  
-        <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()" class="password-form">
-          <h3>Şifre Değiştirme</h3>
-  
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Mevcut Şifre</mat-label>
-            <input matInput type="password" formControlName="currentPassword" />
-            <mat-error *ngIf="changePasswordForm.get('currentPassword')?.hasError('required')">Mevcut şifre zorunludur.</mat-error>
-            <mat-error *ngIf="changePasswordForm.get('currentPassword')?.hasError('minlength')">Mevcut şifre en az 6 karakter olmalıdır.</mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Yeni Şifre</mat-label>
-            <input matInput type="password" formControlName="newPassword" />
-            <mat-error *ngIf="changePasswordForm.get('newPassword')?.hasError('required')">Yeni şifre zorunludur.</mat-error>
-            <mat-error *ngIf="changePasswordForm.get('newPassword')?.hasError('minlength')">Yeni şifre en az 6 karakter olmalıdır.</mat-error>
-          </mat-form-field>
-  
-          <button mat-raised-button color="primary" type="submit" [disabled]="changePasswordForm.invalid || isChangingPassword">
-            <mat-spinner *ngIf="isChangingPassword" [diameter]="24"></mat-spinner>
-            <span *ngIf="!isChangingPassword">Şifreyi Güncelle</span>
-          </button>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </main>
+  <mat-toolbar-row>
+    <span>💼 Newcomer Task Manager</span>
+    <a mat-button routerLink="/tasks" routerLinkActive="active" 
+       matTooltip="Görev Yöneticisine Git" class="nav-button">
+      <mat-icon>assignment</mat-icon> Görevler
+    </a>
+    <a mat-button routerLink="/profile" routerLinkActive="active" 
+       matTooltip="Profil ve Şifre Değiştirme" class="nav-button">
+      <mat-icon>account_circle</mat-icon> Profilim
+    </a>
+    <span class="toolbar-spacer"></span>
+    <span class="user-info-text">
+      {{ authService.getUserRole() === 'admin' ? 'Admin' : 'User' }}: {{ authService.decodeToken()?.username }}
+    </span>
+    <button mat-icon-button (click)="onLogout()" matTooltip="Çıkış Yap">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<!-- Ana içerik -->
+<main class="profile-main">
+  <!-- Profil Bilgileri Kartı (Aynı kalıyor) -->
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <mat-card-title>Profil Bilgileri</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Kullanıcı Adı:</strong> {{ username }}</p>
+      <p><strong>Rol:</strong> {{ authService.getUserRole() === 'admin' ? 'Yönetici' : 'Kullanıcı' }}</p>
+      <mat-divider class="mb-4"></mat-divider>
+      <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()" class="password-form">
+        <h3>Şifre Değiştirme</h3>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Mevcut Şifre</mat-label>
+          <input matInput type="password" formControlName="currentPassword" />
+          <mat-error *ngIf="changePasswordForm.get('currentPassword')?.hasError('required')">Mevcut şifre zorunludur.</mat-error>
+          <mat-error *ngIf="changePasswordForm.get('currentPassword')?.hasError('minlength')">Mevcut şifre en az 6 karakter olmalıdır.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Yeni Şifre</mat-label>
+          <input matInput type="password" formControlName="newPassword" />
+          <mat-error *ngIf="changePasswordForm.get('newPassword')?.hasError('required')">Yeni şifre zorunludur.</mat-error>
+          <mat-error *ngIf="changePasswordForm.get('newPassword')?.hasError('minlength')">Yeni şifre en az 6 karakter olmalıdır.</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="changePasswordForm.invalid || isChangingPassword">
+          <mat-spinner *ngIf="isChangingPassword" [diameter]="24"></mat-spinner>
+          <span *ngIf="!isChangingPassword">Şifreyi Güncelle</span>
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Kullanıcı Yönetimi Kartı (Admin İçin) -->
+  <mat-card class="user-management-card" *ngIf="userRole === 'admin'">
+    <mat-card-header>
+      <mat-card-title>Kullanıcı Yönetimi</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Yükleme Spinner'ı -->
+      <div *ngIf="isLoadingUsers; else userListContent" class="spinner-container">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <ng-template #userListContent>
+        <!-- Boş Liste Ekranı -->
+        <div *ngIf="users.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">people</mat-icon>
+          <h3>Kullanıcı bulunamadı.</h3>
+        </div>
+
+        <!-- Kullanıcı Listesi -->
+        <mat-list *ngIf="users.length > 0">
+          <mat-list-item *ngFor="let user of users" class="user-list-item">
+            <!-- Sol Taraf: Kullanıcı Bilgisi -->
+            <div class="user-info">
+              <span class="username">{{ user.username }}</span>
+              <span class="current-role">Mevcut Rol: {{ user.role === 'admin' ? 'Yönetici' : 'Kullanıcı' }}</span>
+            </div>
+
+            <!-- Sağ Taraf: Rol Kontrolleri -->
+            <div class="role-controls">
+              <!-- Eğer admin KENDİSİNE bakıyorsa -->
+              <ng-container *ngIf="user.id === loggedInUserId; else roleSelectContainer">
+                <span class="self-role-info">(Kendi rolünüzü buradan değiştiremezsiniz)</span>
+              </ng-container>
+
+              <!-- Diğer Kullanıcılar İçin -->
+              <ng-template #roleSelectContainer>
+                <!-- Eğer bu kullanıcı şu an güncelleniyorsa spinner göster -->
+                <mat-spinner *ngIf="updatingRoleId === user.id; else roleSelect" [diameter]="24" class="role-spinner"></mat-spinner>
+
+                <!-- Rol Seçme Dropdown'ı -->
+                <ng-template #roleSelect>
+                  <!-- 💡 GÜNCELLEME: (selectionChange) kaldırıldı, (valueChange) eklendi -->
+                  <mat-form-field appearance="outline" class="role-select">
+                    <mat-label>Yeni Rol</mat-label>
+                    <mat-select [value]="user.role" 
+                                (valueChange)="onRoleSelectionChange(user.id, $event)">
+                      <mat-option value="user">Kullanıcı</mat-option>
+                      <mat-option value="admin">Yönetici</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                   <!-- 💡 YENİ: Kaydet Butonu (Sadece değişiklik varsa görünür) -->
+                   <button mat-icon-button color="primary" 
+                           *ngIf="pendingRoleChanges[user.id] && pendingRoleChanges[user.id] !== user.role"
+                           (click)="onSaveUserRole(user.id, pendingRoleChanges[user.id])"
+                           matTooltip="Rol Değişikliğini Kaydet">
+                     <mat-icon>save</mat-icon>
+                   </button>
+                </ng-template>
+              </ng-template>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</main>
+

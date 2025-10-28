@@ -84,8 +84,13 @@ export class ProfileComponent implements OnInit {
   loadUsers(): void {
     this.isLoadingUsers = true;
     this.userService.getUsers().subscribe({
-      next: (data: User[]) => { // Tip eklendi
-        this.users = data;
+      next: (data: User[]) => {
+        // KULLANICI LİSTESİNİ SIRALA: Giriş yapmış admin en başa gelsin
+        this.users = data.sort((a, b) => {
+          if (a.id === this.loggedInUserId) return -1; // a (kendisi) başa gelsin
+          if (b.id === this.loggedInUserId) return 1;  // b (kendisi) başa gelsin
+          return a.username.localeCompare(b.username); // Diğerlerini alfabetik sırala
+        });
         this.isLoadingUsers = false;
       },
       error: (err: any) => { // Tip eklendi

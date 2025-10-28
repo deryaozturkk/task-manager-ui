@@ -1,11 +1,69 @@
+/* =========================================
+  TOOLBAR / NAVBAR STİLLERİ (İsteğiniz üzerine güncellendi)
+=========================================
+*/
+.main-toolbar {
+  
+  // Toolbar satırının içindeki elemanları hizalamak için
+  mat-toolbar-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  // Başlık (Logo/Uygulama Adı)
+  span[role="img"] {
+    margin-right: 15px; // Logo ile ilk link arası boşluk
+  }
+
+  // Navigasyon Butonları (Görevler, Profilim)
+  .nav-button {
+    margin: 0 8px; // Butonlar arası boşluk
+    display: flex;
+    align-items: center;
+    gap: 6px; // İkon ve yazı arası boşluk
+
+    // Tıklanmış (aktif) link stili
+    &.active {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Kullanıcı ve çıkış butonunu sağa iten anahtar eleman
+  // Bu sınıf, HTML'deki <span class="toolbar-spacer"></span> öğesini hedefler.
+  // flex: 1 1 auto; ayarı, bu elemanın mevcut tüm boş alanı
+  // doldurmasını sağlar, böylece sağındaki her şeyi sona iter.
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  // Kullanıcı Bilgisi (Sağ tarafta)
+  .user-info-text {
+    margin: 0 10px; // Sağ ve solundaki elemanlarla arasına boşluk koyar
+    font-size: 0.9em;
+  }
+
+  // Çıkış Butonu (Sağ tarafta)
+  .logout-button {
+    // İsteğe bağlı ek stiller
+  }
+}
+
+
+/* =========================================
+  DİĞER SAYFA STİLLERİ (Verdiğiniz koddan korundu)
+=========================================
+*/
+
 /* Ana Kapsayıcı: Kartları yan yana (geniş ekran) veya alt alta (dar ekran) dizer */
 .profile-main {
-  display: flex; /* Flexbox kullan */
-  flex-wrap: wrap; /* Sığmazsa alt satıra geç */
-  justify-content: center; /* Ortala */
-  gap: 20px; /* Kartlar arasına boşluk koy */
+  display: flex;
+  flex-wrap: wrap; /* Ekran daralınca alt alta geçsin */
+  gap: 20px; /* Kartlar arası boşluk */
+  justify-content: center;
+  align-items: flex-start;
   padding: 40px 20px;
-  align-items: flex-start; /* Kartları yukarı hizala */
+  min-height: calc(100vh - 64px); /* Toolbar yüksekliği çıkarıldı */
 }
 
 /* Tüm Kartlar İçin Ortak Stiller (Profil ve Kullanıcı Yönetimi) */
@@ -14,27 +72,27 @@
   width: 100%; /* Mobil için varsayılan genişlik */
   max-width: 500px; /* Maksimum genişlik */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex; /* İçeriği yönetmek için flex */
-  flex-direction: column; /* İçeriği dikey diz */
-}
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 400px;
+  min-width: 300px;
 
-/* Kart Başlıkları İçin Ortak Stil */
-.profile-card mat-card-header,
-.user-management-card mat-card-header {
-  background-color: #f5f5f5;
-  padding: 15px;
-  margin-bottom: 20px; /* Başlık ile içerik arasına boşluk */
+  mat-card-header {
+    background-color: #f5f5f5;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #3f51b5;
+  }
 }
 
 /* Profil Bilgileri Kartı İçin Özel Stiller */
 .profile-card mat-card-content {
-  padding: 0 16px 16px 16px; /* Alt boşluğu ayarla */
-}
-
-.profile-card h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  color: #3f51b5;
+  padding: 0 16px 16px 16px;
 }
 
 /* Şifre Formu Stilleri */
@@ -42,12 +100,15 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-top: 20px; /* Divider ile arasına boşluk */
+
+  .w-full {
+    width: 100%;
+  }
 }
 
-/* KULLANICI YÖNETİMİ KARTI STİLLERİ */
+/* Kullanıcı Yönetimi Kartı Stilleri */
 .user-management-card mat-card-content {
-   padding: 0; /* Liste kenarlara yapışsın */
+  padding: 0;
 }
 
 .spinner-container {
@@ -57,7 +118,7 @@
   padding: 40px;
 }
 
-/* Boş Liste Ekranı (Fikir 6) */
+/* Boş Liste Ekranı */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -68,9 +129,9 @@
 
   .empty-icon {
     font-size: 6em;
-    height: 1.5em; /* Yükseklik/genişliği düzeltelim */
+    height: 1.5em;
     width: 1.5em;
-    color: #bdbdbd; /* Açık gri */
+    color: #bdbdbd;
     margin-bottom: 10px;
   }
 
@@ -79,47 +140,41 @@
     font-weight: 500;
     color: #444;
   }
+
   p {
     margin-top: 5px;
     font-size: 0.9em;
   }
 }
 
-
-/* Kullanıcı Listesi Öğesi Stilleri - GÜNCELLENDİ */
+/* Kullanıcı Listesi Öğesi Stilleri */
 .user-list-item {
   height: auto !important;
-  /* Dikey padding'i biraz ayarlayalım, yatayı koruyalım */
-  padding: 12px 16px !important; 
+  padding: 8px 16px !important;
   border-bottom: 1px solid #eee;
 
   &:last-child {
     border-bottom: none;
   }
 
-  /* Liste içeriğini flex ile hizala */
-  // Angular Material v15+ .mdc-list-item__content kullanır
-  // Eğer v15 altı ise .mat-list-item-content olabilir
-  .mdc-list-item__content { 
-      display: flex;
-      align-items: center; /* Dikeyde ortala */
-      justify-content: space-between; /* İki uca yasla */
-      width: 100%;
-      gap: 15px; 
+  // Bu, Angular Material'ın iç yapısını hedeflemek için gereklidir
+  // .mat-mdc-list-item-content yerine
+  ::ng-deep .mdc-list-item__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
   }
 
-  /* Kullanıcı adı ve mevcut rolü gruplayalım */
   .user-info {
     display: flex;
     flex-direction: column;
-    /* Gerekirse genişliği sınırlayabiliriz: max-width: 60%; */
+    flex-grow: 1;
   }
 
   .username {
     font-weight: 500;
-    white-space: nowrap; /* Kullanıcı adı sığmazsa alta kaymasın */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Sığmazsa ... ile kes */
   }
 
   .current-role {
@@ -127,87 +182,46 @@
     color: #666;
   }
 
-  /* Sağ taraftaki kontroller */
   .role-controls {
     display: flex;
-    align-items: center; /* Dikeyde ortala */
-    gap: 8px; /* Kontroller arası boşluk */
-    flex-shrink: 0; /* Bu alan küçülmesin */
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
   }
 
-  /* Rol seçimi için mat-form-field stili */
   .role-select {
-    width: 130px; /* Select kutusuna sabit bir genişlik verelim */
-    /* Form field'ın altındaki gereksiz boşluğu azaltalım */
+    // Form alanı altındaki hata/ipucu boşluğunu kaldırır
     .mat-mdc-form-field-subscript-wrapper {
-        display: none; /* Alt boşluğu tamamen kaldıralım */
+      height: 0;
+      min-height: 0;
     }
-     /* Etiketi biraz küçültelim */
+
     .mat-mdc-floating-label {
-        font-size: 0.8em;
+      font-size: 0.8em;
     }
   }
 
-  /* Admin kendi rolünü değiştiremez bilgisi */
   .self-role-info {
     font-style: italic;
     color: #888;
-    font-size: 0.85em; /* Diğer metinlerle aynı boyutta */
+    font-size: 0.9em;
     text-align: right;
-    white-space: normal; /* Sığmazsa alt satıra kayabilir */
-    min-width: 150px; /* Kaydet butonuyla hizalamak için */
+    padding: 0 10px;
+    white-space: normal;
   }
 
   .role-spinner {
-     /* Spinner zaten 24px, ekstra stil gerekmez */
-     margin: 0 8px; /* Sağındaki/solundakiyle boşluk */
-  }
-
-  /* Kaydet butonu stili */
-  button[mat-icon-button] {
-    /* Spinner ile hizalamak için */
-    width: 40px; 
-    height: 40px; 
+    width: 24px;
+    height: 24px;
   }
 }
 
-/* Genel */
-.mb-4 {
-  margin-bottom: 1.5rem !important;
-}
-.w-full {
-  width: 100%;
+/* Angular Material Select kutusunun padding'ini ayarlayalım */
+::ng-deep .user-list-item .role-select .mat-mdc-text-field-wrapper {
+  padding-right: 8px !important;
+  padding-left: 8px !important;
 }
 
-/* Navbar ve Toolbar Stilleri (TasksComponent'ten) */
-.main-toolbar {
-  height: 64px;
+::ng-deep .user-list-item .role-select .mat-mdc-select-value {
+  padding-left: 0 !important;
 }
-
-.toolbar-spacer {
-  flex: 1 1 auto;
-}
-
-.nav-button {
-  min-width: auto; /* Otomatik genişlik */
-  padding: 0 16px; /* İç boşluk */
-  display: flex;
-  flex-direction: row; 
-  align-items: center; 
-  gap: 6px; /* İkon ve metin arası */
-  margin-right: 8px; /* Butonlar arası boşluk */
-  font-weight: 500;
-  
-  &.active { 
-    color: white !important;
-    background-color: rgba(0, 0, 0, 0.1); 
-  }
-}
-
-.user-info-text {
-  font-size: 0.9em; /* Biraz küçültelim */
-  font-weight: 400;
-  margin-right: 10px; /* Butonla arasına boşluk */
-}
-
-

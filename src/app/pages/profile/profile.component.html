@@ -1,9 +1,7 @@
-<!-- src/app/pages/profile/profile.component.html -->
-
 <!-- NAVBAR (Aynı kalıyor) -->
 <mat-toolbar color="primary" class="main-toolbar">
   <mat-toolbar-row>
-    <span>💼 Newcomer Task Manager</span>
+    <span>💼 Task Manager</span>
     <a mat-button routerLink="/tasks" routerLinkActive="active" 
        matTooltip="Görev Yöneticisine Git" class="nav-button">
       <mat-icon>assignment</mat-icon> Görevler
@@ -16,9 +14,10 @@
     <span class="user-info-text">
       {{ authService.getUserRole() === 'admin' ? 'Admin' : 'User' }}: {{ authService.decodeToken()?.username }}
     </span>
-    <button mat-icon-button (click)="onLogout()" matTooltip="Çıkış Yap">
+    <button mat-icon-button class="logout-button" (click)="onLogout()" matTooltip="Çıkış Yap">
       <mat-icon>logout</mat-icon>
     </button>
+    
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -96,7 +95,7 @@
 
                 <!-- Rol Seçme Dropdown'ı -->
                 <ng-template #roleSelect>
-                  <!-- 💡 GÜNCELLEME: (selectionChange) kaldırıldı, (valueChange) eklendi -->
+                  <!-- selectionChange) kaldırıldı, (valueChange) eklendi -->
                   <mat-form-field appearance="outline" class="role-select">
                     <mat-label>Yeni Rol</mat-label>
                     <mat-select [value]="user.role" 
@@ -105,7 +104,7 @@
                       <mat-option value="admin">Yönetici</mat-option>
                     </mat-select>
                   </mat-form-field>
-                   <!-- 💡 YENİ: Kaydet Butonu (Sadece değişiklik varsa görünür) -->
+                   <!-- Kaydet Butonu (Sadece değişiklik varsa görünür) -->
                    <button mat-icon-button color="primary" 
                            *ngIf="pendingRoleChanges[user.id] && pendingRoleChanges[user.id] !== user.role"
                            (click)="onSaveUserRole(user.id, pendingRoleChanges[user.id])"

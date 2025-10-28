@@ -1,121 +1,100 @@
-.main-content {
-    padding: 24px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 20px;
-  }
-  
-  /* Kartların içindeki formun daha iyi görünmesi için */
-  .task-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  /* Görev tamamlandığında üstünü çizmek için */
-  .task-completed {
-    text-decoration: line-through;
-    color: #aaa;
-  }
-  
-  /* "Ekle" butonundaki Spinner için */
-  button[mat-raised-button] {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 48px;
-  }
-  
-  /* Ana Liste Yükleme Spinner'ı */
-  .list-spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-  }
-  
-  /* Filtre Butonları */
-  .filter-toggle {
-    margin-bottom: 20px;
-    display: flex;
-  
-    mat-button-toggle {
-      flex: 1;
-    }
-  }
-  
-  /* Görev listesi boşken gösterilecek mesaj */
-  .empty-list-message {
-    color: #888;
-    font-style: italic;
-    text-align: center;
-    padding: 20px 0;
-  }
-  
-  .task-list-content {
-    max-height: 60vh;
-    overflow-y: auto;
-  }
-  
-  .task-items-list {
-    .mat-mdc-list-item-line {
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-    }
-  }
-
-.assigned-user {
-    display: flex;       
-    align-items: center; 
-    gap: 6px;           
-    font-size: 0.8em;   
-    color: #666;         
-  
-    mat-icon {
-      font-size: 1em;    
-      height: auto;      
-      width: auto;       
-    }
-  }
-  
-  .assigned-user.task-completed {
-    color: #bbb;
-  }
-  
-  mat-list-item[two-line] mat-icon[matListItemIcon] {
-    align-self: flex-start; // İkonu yukarı hizala
-    margin-top: 8px;       
-  }
-
-.main-toolbar {
-  height: 64px;
+/* Navbar ve Toolbar Stilleri - ProfileComponent ile aynı olmalı */
+.main-toolbar mat-toolbar-row { // mat-toolbar-row'a flex uygulayalım
+  display: flex;
+  align-items: center; // Dikeyde ortala
+  width: 100%;
+  padding: 0 16px; /* Kenarlara boşluk ekleyelim */
 }
 
 .toolbar-spacer {
-  flex: 1 1 auto; /* Kullanıcı bilgisini sağa iter */
+  /* flex-grow: 1; */ /*Tamamen genişlemesini geçici olarak kapatalım veya azaltalım */
+   margin: 0 auto; /* Alternatif: Linkleri ortalamak için */
 }
 
-.nav-bar {
-  margin-left: 20px;
-}
-
-.nav-item {
-  min-width: 120px;
+.nav-button {
+  min-width: auto; /* Otomatik genişlik */
+  padding: 0 16px; /* İç boşluk */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  margin-right: 10px;
+  gap: 6px; /* İkon ve metin arası */
+  margin: 0 4px; /* Butonlar arası boşluk (azaltıldı) */
   font-weight: 500;
+  flex-shrink: 0; // Butonlar küçülmesin
+
+  &.active {
+    color: white !important;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }
 
 .user-info-text {
-  font-size: 1.1em;
+  font-size: 0.9em;
   font-weight: 400;
-  margin-right: 15px;
+  margin-left: auto; /* Kullanıcı bilgisini sağa itelim */
+  margin-right: 10px; /* Butonla arasına boşluk */
+  white-space: nowrap; // Alta kaymasın
+  flex-shrink: 0; // Küçülmesin
 }
 
+/* Çıkış butonu */
+.logout-button { // Butona özel bir class verelim (HTML'de de eklenmeli)
+    flex-shrink: 0; // Küçülmesin
+}
+
+/* ------------------------------------------- */
+/* Aşağısı TasksComponent'e Özel Stiller      */
+/* ------------------------------------------- */
+
+/* Fikir 4: Responsive (Duyarlı) Yerleşim */
+.main-content {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+/* Kartların içindeki formun daha iyi görünmesi için */
+.task-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Görev tamamlandığında üstünü çizmek için */
+.task-completed {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+/* "Ekle" butonundaki Spinner için */
+/* Toolbar'daki icon-button ile çakışmaması için daha spesifik yapalım */
+.task-card form button[mat-raised-button] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+}
+
+/* Ana Liste Yükleme Spinner'ı */
+.list-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Filtre Butonları */
+.filter-toggle {
+  margin-bottom: 20px;
+  display: flex;
+
+  mat-button-toggle {
+    flex: 1;
+  }
+}
+
+/* Boş Liste Ekranı (Fikir 6) */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -128,7 +107,7 @@
     font-size: 6em;
     height: 1.5em;
     width: 1.5em;
-    color: #bdbdbd; /* Açık gri */
+    color: #bdbdbd;
     margin-bottom: 10px;
   }
 
@@ -142,3 +121,42 @@
     font-size: 0.9em;
   }
 }
+
+/* Kaydırılabilir Görev Listesi */
+.task-list-content {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Açıklama satırı çok uzarsa '...' ile kessin */
+.task-items-list {
+  .mat-mdc-list-item-line { // Angular Material v15+
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+  }
+   /* Üçüncü satır (Atanan Kullanıcı) için stil */
+   .assigned-user {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8em;
+    color: #666;
+
+    mat-icon {
+      font-size: 1em;
+      height: auto;
+      width: auto;
+    }
+    &.task-completed { // Tamamlanmışsa soluklaştır
+      color: #bbb;
+    }
+  }
+}
+
+/* User görünümünde sol ikonu hizala */
+mat-list-item[two-line] mat-icon[matListItemIcon] {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+

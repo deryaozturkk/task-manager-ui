@@ -14,7 +14,7 @@
     <span class="toolbar-spacer"></span> <span class="user-info-text">
       {{ authService.getUserRole() === 'admin' ? 'Admin' : 'User' }}: {{ authService.decodeToken()?.username }}
     </span>
-    <button mat-icon-button (click)="onLogout()" matTooltip="Çıkış Yap">
+    <button mat-icon-button (click)="onLogout()" matTooltip="Çıkış Yap" class="logout-button">
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar-row>
